@@ -1,0 +1,65 @@
+#include <LiquidCrystal_I2C.h>
+#include <LedControl.h>
+
+LiquidCrystal_I2C lcd(0x27,16,2);
+#define Red 3
+#define DIN 12
+#define CS 10
+#define CLK 11
+#define Width 8
+#define Height 8
+LedControl LC =
+LedControl(DIN,CLK,CS,1);
+void Update(int Map[Height][Width])
+{
+  for(int i=0;i<Height; i++){
+    for(int j=0;j<Width; j++){
+      LC.setLed(0,i,j,Map[i][j]);
+
+    }
+  }
+}
+int On[8][8]={
+
+  {0,1,1,1,1,0,0,0},
+  {0,1,0,0,0,1,0,0},
+  {0,1,0,0,0,0,1,0},
+  {0,1,1,1,1,1,0,0},
+  {0,1,1,0,0,0,0,0},
+  {0,1,0,1,0,0,0,0},
+  {0,1,0,0,1,0,0,0},
+  {0,1,0,0,0,1,0,0}
+
+  };
+
+
+void setup() {
+  lcd.init();
+  lcd.backlight();
+  lcd.setCursor(2,0);
+  lcd.print("Show the color");
+  delay(3000);
+  lcd.clear();
+  lcd.setCursor(3,0);
+  lcd.print("This is red");
+  delay(3000);
+  pinMode(3,OUTPUT);
+  digitalWrite(3,OUTPUT);
+  delay(3000);
+  pinMode(DIN,OUTPUT);
+  pinMode(CS,OUTPUT);
+  pinMode(CLK,OUTPUT);
+  LC.shutdown(0,false);
+  LC.setIntensity(0,15);
+  Update(On);
+
+
+
+  // put your setup code here, to run once:
+
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+
+}
